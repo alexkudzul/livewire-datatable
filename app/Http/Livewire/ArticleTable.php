@@ -41,7 +41,10 @@ class ArticleTable extends DataTableComponent
             ImageColumn::make('Imagen')
                 ->location(fn () => 'https://cdn-icons-png.flaticon.com/128/2111/2111748.png'),
             Column::make("Fecha creación", "created_at")
-                ->sortable(),
+                ->sortable()
+                ->format(
+                    fn ($value) => $value->format('d/m/Y')
+                ),
             ButtonGroupColumn::make('Action')
                 ->buttons([
                     LinkColumn::make('Ver')
