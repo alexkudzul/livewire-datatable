@@ -64,9 +64,10 @@ class ArticleTable extends DataTableComponent
                             'class' => 'btn btn-blue',
                         ]),
                 ]),
-            Column::make('Actions with view', 'id')
-                ->format(
-                    fn ($value) => view('articles.tables.action', ['id' => $value])
+            // If you have a column that is not associated with a database column, you can chain the label method
+            Column::make('Action with view')
+                ->label(
+                    fn ($row) => view('articles.tables.action', ['id' => $row->id])
                 ),
         ];
     }
