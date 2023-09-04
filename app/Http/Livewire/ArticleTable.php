@@ -17,7 +17,16 @@ class ArticleTable extends DataTableComponent
 
     public function configure(): void
     {
-        $this->setPrimaryKey('id');
+        // Clickable Rows
+        $this->setPrimaryKey('id')
+            ->setTableRowUrl(function ($row) {
+                return route('welcome');
+            })
+            ->setTableRowUrlTarget(function ($row) {
+                return '_blank';
+            });
+
+        // Sorting
         $this->setDefaultSort('id', 'asc');
         // Deshabilite la clasificación única para todo el componente.
         $this->setSingleSortingDisabled(); // Multi-column sorting
@@ -37,7 +46,8 @@ class ArticleTable extends DataTableComponent
                 ->sortable()
                 ->searchable(
                     fn (Builder $query, $searchTerm) => $query->orWhere('title', 'like', '%' . $searchTerm . '%')
-                ),
+                )
+                ->unclickable(),
             BooleanColumn::make('Publicado', 'is_published')
                 ->sortable()
                 ->collapseOnTablet(),
@@ -69,13 +79,15 @@ class ArticleTable extends DataTableComponent
                             'class' => 'btn btn-blue',
                         ]),
                 ])
-                ->collapseOnTablet(),
+                ->collapseOnTablet()
+                ->unclickable(),
             // If you have a column that is not associated with a database column, you can chain the label method
             Column::make('Action with view')
                 ->label(
                     fn ($row) => view('articles.tables.action', ['id' => $row->id])
                 )
-                ->collapseOnTablet(),
+                ->collapseOnTablet()
+                ->unclickable(),
         ];
     }
 
