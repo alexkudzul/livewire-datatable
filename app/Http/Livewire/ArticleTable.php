@@ -19,6 +19,8 @@ class ArticleTable extends DataTableComponent
     {
         $this->setPrimaryKey('id');
         $this->setDefaultSort('id', 'asc');
+        // Deshabilite la clasificación única para todo el componente.
+        $this->setSingleSortingDisabled(); // Multi-column sorting
     }
 
     public function columns(): array
