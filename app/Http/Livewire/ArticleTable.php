@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
+use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 
 class ArticleTable extends DataTableComponent
 {
@@ -20,7 +21,7 @@ class ArticleTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make('Orden', 'sort')
+            Column::make('id')
                 ->sortable(),
             Column::make('Autor', 'user.name')
                 ->sortable(),
@@ -30,6 +31,14 @@ class ArticleTable extends DataTableComponent
                 ->sortable(),
             Column::make("Fecha creación", "created_at")
                 ->sortable(),
+            LinkColumn::make('Action')
+                ->title(fn () => 'Editar')
+                ->location(fn ($row) => route('dashboard', [
+                    'prueba' => $row->id,
+                ]))
+                ->attributes(fn () => [
+                    'class' => 'btn btn-blue',
+                ]),
         ];
     }
 
