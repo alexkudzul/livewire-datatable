@@ -18,13 +18,14 @@ class ArticleTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+        $this->setDefaultSort('id', 'asc');
     }
 
     public function columns(): array
     {
         return [
             Column::make('id')
-                ->sortable(),
+                ->sortable(fn (Builder $query, string $direction) => $query->orderBy('id', $direction)),
             Column::make('Autor', 'user.name')
                 ->sortable(),
             Column::make('Título', 'title')
