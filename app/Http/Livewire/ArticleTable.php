@@ -19,21 +19,13 @@ class ArticleTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make("Id", "id")
+            Column::make('Orden', 'sort')
                 ->sortable(),
-            Column::make('Title', 'title')
+            Column::make('Título', 'title')
                 ->sortable(),
-            Column::make('Content', 'content')
+            Column::make('Publicado', 'is_published')
                 ->sortable(),
-            Column::make('Is Published', 'is_published')
-                ->sortable(),
-            Column::make('Sort', 'sort')
-                ->sortable(),
-            Column::make('User Id', 'user_id')
-                ->sortable(),
-            Column::make("Created at", "created_at")
-                ->sortable(),
-            Column::make("Updated at", "updated_at")
+            Column::make("Fecha creación", "created_at")
                 ->sortable(),
         ];
     }
