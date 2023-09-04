@@ -29,9 +29,13 @@ class ArticleTable extends DataTableComponent
             Column::make('id')
                 ->sortable(fn (Builder $query, string $direction) => $query->orderBy('id', $direction)),
             Column::make('Autor', 'user.name')
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make('Título', 'title')
-                ->sortable(),
+                ->sortable()
+                ->searchable(
+                    fn (Builder $query, $searchTerm) => $query->orWhere('title', 'like', '%' . $searchTerm . '%')
+                ),
             BooleanColumn::make('Publicado', 'is_published')
                 ->sortable(),
             ImageColumn::make('Imagen')
