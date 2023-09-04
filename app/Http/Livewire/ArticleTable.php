@@ -21,6 +21,8 @@ class ArticleTable extends DataTableComponent
         return [
             Column::make('Orden', 'sort')
                 ->sortable(),
+            Column::make('Autor', 'user.name')
+                ->sortable(),
             Column::make('Título', 'title')
                 ->sortable(),
             Column::make('Publicado', 'is_published')
