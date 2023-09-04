@@ -30,6 +30,20 @@ class ArticleTable extends DataTableComponent
         $this->setDefaultSort('id', 'asc');
         // Deshabilite la clasificación única para todo el componente.
         $this->setSingleSortingDisabled(); // Multi-column sorting
+
+        // Pagination
+        $this->setPageName('pagina');
+        $this->setPerPageAccepted([
+            10,
+            25,
+            50,
+            100,
+            -1 // Todo
+        ]);
+        $this->setPerPage(10);
+        $this->setPaginationStatus(true); // enable/disable pagination for the component.
+        $this->setPerPageVisibilityStatus(true); // enable/disable per page visibility.
+
     }
 
     public function columns(): array
