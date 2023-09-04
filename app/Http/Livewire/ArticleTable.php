@@ -27,24 +27,29 @@ class ArticleTable extends DataTableComponent
     {
         return [
             Column::make('id')
-                ->sortable(fn (Builder $query, string $direction) => $query->orderBy('id', $direction)),
+                ->sortable(fn (Builder $query, string $direction) => $query->orderBy('id', $direction))
+                ->collapseOnTablet(),
             Column::make('Autor', 'user.name')
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->collapseOnTablet(),
             Column::make('Título', 'title')
                 ->sortable()
                 ->searchable(
                     fn (Builder $query, $searchTerm) => $query->orWhere('title', 'like', '%' . $searchTerm . '%')
                 ),
             BooleanColumn::make('Publicado', 'is_published')
-                ->sortable(),
+                ->sortable()
+                ->collapseOnTablet(),
             ImageColumn::make('Imagen')
-                ->location(fn () => 'https://cdn-icons-png.flaticon.com/128/2111/2111748.png'),
+                ->location(fn () => 'https://cdn-icons-png.flaticon.com/128/2111/2111748.png')
+                ->collapseOnTablet(),
             Column::make("Fecha creación", "created_at")
                 ->sortable()
                 ->format(
                     fn ($value) => $value->format('d/m/Y')
-                ),
+                )
+                ->collapseOnTablet(),
             ButtonGroupColumn::make('Action')
                 ->buttons([
                     LinkColumn::make('Ver')
@@ -63,12 +68,14 @@ class ArticleTable extends DataTableComponent
                         ->attributes(fn () => [
                             'class' => 'btn btn-blue',
                         ]),
-                ]),
+                ])
+                ->collapseOnTablet(),
             // If you have a column that is not associated with a database column, you can chain the label method
             Column::make('Action with view')
                 ->label(
                     fn ($row) => view('articles.tables.action', ['id' => $row->id])
-                ),
+                )
+                ->collapseOnTablet(),
         ];
     }
 
