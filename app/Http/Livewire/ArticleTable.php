@@ -8,6 +8,7 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
+use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 
 class ArticleTable extends DataTableComponent
@@ -30,6 +31,8 @@ class ArticleTable extends DataTableComponent
                 ->sortable(),
             BooleanColumn::make('Publicado', 'is_published')
                 ->sortable(),
+            ImageColumn::make('Imagen')
+                ->location(fn () => 'https://cdn-icons-png.flaticon.com/128/2111/2111748.png'),
             Column::make("Fecha creación", "created_at")
                 ->sortable(),
             ButtonGroupColumn::make('Action')
