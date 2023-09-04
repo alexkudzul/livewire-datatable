@@ -64,6 +64,10 @@ class ArticleTable extends DataTableComponent
                             'class' => 'btn btn-blue',
                         ]),
                 ]),
+            Column::make('Actions with view', 'id')
+                ->format(
+                    fn ($value) => view('articles.tables.action', ['id' => $value])
+                ),
         ];
     }
 
