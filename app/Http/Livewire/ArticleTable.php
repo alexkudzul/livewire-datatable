@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
+use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 
 class ArticleTable extends DataTableComponent
@@ -31,13 +32,24 @@ class ArticleTable extends DataTableComponent
                 ->sortable(),
             Column::make("Fecha creación", "created_at")
                 ->sortable(),
-            LinkColumn::make('Action')
-                ->title(fn () => 'Editar')
-                ->location(fn ($row) => route('dashboard', [
-                    'prueba' => $row->id,
-                ]))
-                ->attributes(fn () => [
-                    'class' => 'btn btn-blue',
+            ButtonGroupColumn::make('Action')
+                ->buttons([
+                    LinkColumn::make('Ver')
+                        ->title(fn () => 'Ver')
+                        ->location(fn ($row) => route('dashboard', [
+                            'prueba' => $row->id,
+                        ]))
+                        ->attributes(fn () => [
+                            'class' => 'btn btn-green',
+                        ]),
+                    LinkColumn::make('Editar')
+                        ->title(fn () => 'Editar')
+                        ->location(fn ($row) => route('dashboard', [
+                            'prueba' => $row->id,
+                        ]))
+                        ->attributes(fn () => [
+                            'class' => 'btn btn-blue',
+                        ]),
                 ]),
         ];
     }
