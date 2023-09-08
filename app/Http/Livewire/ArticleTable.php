@@ -3,13 +3,15 @@
 namespace App\Http\Livewire;
 
 use App\Models\Article;
+use App\Exports\ArticlesExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
+use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
+use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
-use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
-use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 
 class ArticleTable extends DataTableComponent
 {
@@ -47,6 +49,7 @@ class ArticleTable extends DataTableComponent
         // Bulk actions
         $this->setBulkActions([
             'deleteSelected' => 'Eliminar',
+            'exportSelected' => 'Exportar'
         ]);
     }
 
@@ -122,6 +125,19 @@ class ArticleTable extends DataTableComponent
             $this->clearSelected();
         } else {
             $this->emit('error', 'No hay registros seleccionados');
+        }
+    }
+
+    public function exportSelected()
+    {
+        if ($this->getSelected()) {
+            $this->clearSelected();
+            $articles = Article::whereIn('id', $this->getSelected())->get();
+
+            return Excel::download(new ArticlesExport($articles), 'articles.xlsx');
+        } else {
+            // Exports the items that are visible on the page.
+            return Excel::download(new ArticlesExport($this->getRows()), 'articles.xlsx');
         }
     }
 }
