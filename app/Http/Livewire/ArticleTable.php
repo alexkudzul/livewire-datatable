@@ -44,6 +44,10 @@ class ArticleTable extends DataTableComponent
         $this->setPaginationStatus(true); // enable/disable pagination for the component.
         $this->setPerPageVisibilityStatus(true); // enable/disable per page visibility.
 
+        // Bulk actions
+        $this->setBulkActions([
+            'deleteSelected' => 'Eliminar',
+        ]);
     }
 
     public function columns(): array
@@ -109,5 +113,15 @@ class ArticleTable extends DataTableComponent
     {
         return Article::query()
             ->with('user');
+    }
+
+    public function deleteSelected()
+    {
+        if ($this->getSelected()) {
+            Article::whereIn('id', $this->getSelected())->delete();
+            $this->clearSelected();
+        } else {
+            $this->emit('error', 'No hay registros seleccionados');
+        }
     }
 }
