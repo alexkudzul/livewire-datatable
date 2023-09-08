@@ -51,6 +51,9 @@ class ArticleTable extends DataTableComponent
             'deleteSelected' => 'Eliminar',
             'exportSelected' => 'Exportar'
         ]);
+
+        // Reordering
+        $this->setReorderStatus(true);
     }
 
     public function columns(): array
@@ -138,6 +141,13 @@ class ArticleTable extends DataTableComponent
         } else {
             // Exports the items that are visible on the page.
             return Excel::download(new ArticlesExport($this->getRows()), 'articles.xlsx');
+        }
+    }
+
+    public function reorder($items)
+    {
+        foreach ($items as $item) {
+            Article::find((int)$item['value'])->update(['sort' => (int)$item['order']]);
         }
     }
 }
