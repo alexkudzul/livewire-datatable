@@ -12,6 +12,7 @@ use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
+use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class ArticleTable extends DataTableComponent
 {
@@ -149,5 +150,21 @@ class ArticleTable extends DataTableComponent
         foreach ($items as $item) {
             Article::find((int)$item['value'])->update(['sort' => (int)$item['order']]);
         }
+    }
+
+    public function filters(): array
+    {
+        return [
+            SelectFilter::make('Publicado')
+                ->options([
+                    '' => 'Todos',
+                    1 => 'Si',
+                    0 => 'No',
+                ])->filter(function ($query, $value) {
+                    if ($value != '') {
+                        $query->where('is_published', $value);
+                    }
+                }),
+        ];
     }
 }
