@@ -10,6 +10,7 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\NumberFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
@@ -185,6 +186,15 @@ class ArticleTable extends DataTableComponent
             NumberFilter::make('ID mayor que')
                 ->filter(function ($query, $value) {
                     $query->where('articles.id', '>=', $value);
+                }),
+
+            TextFilter::make('Título')
+                ->config([
+                    'placeholder' => 'Buscar por título',
+                    'maxlength' => '25',
+                ])
+                ->filter(function ($query, $value) {
+                    $query->where('title', 'like', '%' . $value . '%');
                 }),
         ];
     }
