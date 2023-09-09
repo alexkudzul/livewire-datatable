@@ -12,6 +12,7 @@ use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
+use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class ArticleTable extends DataTableComponent
@@ -164,6 +165,20 @@ class ArticleTable extends DataTableComponent
                     if ($value != '') {
                         $query->where('is_published', $value);
                     }
+                }),
+
+            // Date filters have options to set min and max:
+            DateFilter::make('Desde')
+                ->config([
+                    'min' => '2023-09-10'
+                ])
+                ->filter(function ($query, $value) {
+                    $query->whereDate('articles.created_at', '>=', $value);
+                }),
+
+            DateFilter::make('Hasta')
+                ->filter(function ($query, $value) {
+                    $query->whereDate('articles.created_at', '<=', $value);
                 }),
         ];
     }
