@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
+use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
+use Rappasoft\LaravelLivewireTables\Views\Filters\NumberFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
-use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
-use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class ArticleTable extends DataTableComponent
 {
@@ -179,6 +180,11 @@ class ArticleTable extends DataTableComponent
             DateFilter::make('Hasta')
                 ->filter(function ($query, $value) {
                     $query->whereDate('articles.created_at', '<=', $value);
+                }),
+
+            NumberFilter::make('ID mayor que')
+                ->filter(function ($query, $value) {
+                    $query->where('articles.id', '>=', $value);
                 }),
         ];
     }
