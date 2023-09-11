@@ -33,7 +33,7 @@ class ArticleTable extends DataTableComponent
             });
 
         // Sorting
-        $this->setDefaultSort('id', 'asc');
+        $this->setDefaultSort('sort');
         // Deshabilite la clasificación única para todo el componente.
         $this->setSingleSortingDisabled(); // Multi-column sorting
 
